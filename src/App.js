@@ -8,6 +8,7 @@ const Profile = lazy(() => import('./screens/Profile'));
 const Home = lazy(() => import('./screens/Home'));
 const Register = lazy(() => import('./screens/Register'));
 const Users = lazy(() => import('./screens/Users'));
+const Brands = lazy(() => import('./screens/Brands'));
 
 
 
@@ -21,10 +22,10 @@ const App = () => {
             <main className='py-3'>
               <Container>
                 <Route exact path='/' component={Home} />
-                <Route path='/profile' component={Profile} />
-                <Route path='/register' component={Register} />
-                <Route path='/users' component={ Users } />
-                
+                <Route path='/admin/profile' component={Profile} />
+                <Route path='/admin/register' component={Register} />
+                <Route path='/admin/users' component={Users} />
+                <Route path='/admin/brands' component={Brands} />
               </Container>
             </main>
           </Switch>
