@@ -3,6 +3,7 @@ import Footer from './components/Footer';
 import { Container } from 'react-bootstrap';
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Loader from './components/Loader';
 
 const Profile = lazy(() => import('./screens/Profile'));
 const Home = lazy(() => import('./screens/Home'));
@@ -17,12 +18,12 @@ const App = () => {
     <div className='App'>
       <Header />
       <Router>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div> <Loader/> </div>}>
           <Switch>
             <main className='py-3'>
               <Container>
                 <Route exact path='/' component={Home} />
-                <Route path='/admin/profile' component={Profile} />
+                <Route path='/admin/profile/:id' component={Profile} />
                 <Route path='/admin/register' component={Register} />
                 <Route path='/admin/users' component={Users} />
                 <Route path='/admin/brands' component={Brands} />

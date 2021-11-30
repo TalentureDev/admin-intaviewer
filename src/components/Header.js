@@ -1,10 +1,14 @@
 import React, {useEffect} from 'react';
 import { Navbar, Nav, Container, NavDropdown, Dropdown } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { logout } from '../actions/userActions';
 import SearchBox from './SearchBox';
+import { getUsers, getUser } from '../redux/actions/actions.js';
 
 const Header = () => {
+
+  const dispatch = useDispatch();
   useEffect(() => {
     // if (!isLoggedIn()) {
     //   const redirect = props.history.location.search ? props.history.location.search.split('=')[1] : '/';
@@ -21,6 +25,8 @@ const Header = () => {
     //   });
     // }
   }, []);
+
+  
 
   return (
     <header>
@@ -39,16 +45,18 @@ const Header = () => {
 
             <Nav className='ml-auto'>
               <Nav.Item>
-                <Nav.Link href='/admin/profile'>
-                  Profile <i className='fas fa-shopping-cart'></i>{' '}
+                <Nav.Link onClick={dispatch(getUser('5f1e86cf87482e0017d2e665'))} href='/admin/profile/5f1e86cf87482e0017d2e665/edit'>
+                  Profile{' '}
                 </Nav.Link>
               </Nav.Item>
 
               <NavDropdown title='Dropdown' id='adminmenu'>
-                <Dropdown.Item href='/admin/profile'>Peofile</Dropdown.Item>
-                <Dropdown.Item href='/admin/users'>Users</Dropdown.Item>
+                {/* <Dropdown.Item href='/admin/profile/:id'>Profile</Dropdown.Item> */}
+                <Dropdown.Item onClick={dispatch(getUsers())} href='/admin/users'>
+                  Users
+                </Dropdown.Item>
                 <Dropdown.Item href='/admin/brands'>Brands</Dropdown.Item>
-                <Dropdown.Item href='/admin/register'>Register</Dropdown.Item>
+                <Dropdown.Item href='/admin/register'>Register User</Dropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>

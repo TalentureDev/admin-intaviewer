@@ -1,12 +1,14 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { userListReducer, userRegisterReducer } from '../reducers/reducers';
+import { userListReducer, userRegisterReducer, getUserReducer, updateUserReducer } from '../reducers/reducers';
 
 
 const reducer = combineReducers({
   userList: userListReducer,
   user: userRegisterReducer,
+  userDetails: getUserReducer,
+  userInfo: updateUserReducer,
 });
 
 
