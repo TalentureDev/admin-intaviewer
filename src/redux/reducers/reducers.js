@@ -14,6 +14,7 @@ import {
   USER_LIST_RESET,
   USER_UPDATE_RESET,
   USER_LOGOUT,
+  GET_USER_RESET
 } from '../constants/constants';
 
 
@@ -32,14 +33,16 @@ export const userListReducer = (state = { users: [] }, action) => {
   }
 };
 
-export const getUserReducer = (state = { userInfo: {} }, action) => {
+export const getUserReducer = (state = { user : {}}, action) => {
   switch (action.type) {
     case GET_USER_REQUEST:
-      return { loading: true };
+      return { ...state, loading: true };
     case GET_USER_SUCCESS:
       return { loading: false, userInfo: action.payload };
     case GET_USER_FAIL:
       return { loading: false, error: action.payload };
+    case GET_USER_RESET:
+      return {userInfo : {}}
     default:
       return state;
   }
@@ -58,12 +61,12 @@ export const userRegisterReducer = (state = { userRegister: {} }, action) => {
   }
 };
 
-export const updateUserReducer = (state = { user: {} }, action) => {
+export const updateUserReducer = (state = { }, action) => {
   switch (action.type) {
     case GET_USER_REQUEST:
       return { loading: true };
     case GET_USER_SUCCESS:
-      return { loading: false, user: action.payload };
+      return { loading: false, userInfo: action.payload };
     case GET_USER_FAIL:
       return { loading: false, error: action.payload };
     case USER_UPDATE_RESET:
@@ -73,12 +76,12 @@ export const updateUserReducer = (state = { user: {} }, action) => {
   }
 };
 
-export const userLoginReducer = (state = {}, action) => {
+export const userLoginReducer = (state = {} , action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { loading: true };
     case USER_LOGIN_SUCCESS:
-      return { loading: false, userInfo: action.payload };
+      return { loading: false, userInfo : action.payload };
     case USER_LOGIN_FAIL:
       return { loading: false, error: action.payload };
     case USER_LOGOUT:

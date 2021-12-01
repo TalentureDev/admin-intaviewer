@@ -17,6 +17,8 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAIL,
   USER_UPDATE_RESET,
+  GET_USER_RESET,
+  USER_LIST_RESET,
   USER_LOGOUT,
 } from '../constants/constants';
 
@@ -32,7 +34,7 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post('/api/v1/users/login', { email, password }, config);
+    const { data } = await axios.post('http://localhost:4000/api/auth/login/admin', { email, password }, config);
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
@@ -41,9 +43,11 @@ export const login = (email, password) => async (dispatch) => {
 
     localStorage.setItem('userLoginDetails', JSON.stringify(data));
   } catch (error) {
+
+    console.log(error.response, "error")
     dispatch({
       type: USER_LOGIN_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload: error.response && error.response.data.error ? error.response.data.error : error.error,
     });
   }
 };
@@ -75,7 +79,7 @@ export const getUsers = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_LIST_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload: error.response && error.response.data.error ? error.response.data.error : error.error,
     });
   }
 };
@@ -107,7 +111,7 @@ export const getUser = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: GET_USER_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload: error.response && error.response.data.error ? error.response.data.error : error.error,
     });
   }
 };
@@ -143,7 +147,7 @@ export const register = (first_name, last_name, brand_name, email, password, con
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload: error.response && error.response.data.error ? error.response.data.error : error.error,
     });
   }
 };
@@ -178,7 +182,16 @@ export const updateUserProfile = (first_name, last_name, email, password, confir
   } catch (error) {
     dispatch({
       type: UPDATE_USER_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+      payload: error.response && error.response.data.error ? error.response.data.error : error.error,
     });
   }
+};
+
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('userLoginDetails');
+  localStorage.removeItem('room_name');
+  dispatch({ type: USER_LOGOUT });
+  dispatch({ type: GET_USER_RESET });
+  dispatch({ type: USER_LIST_RESET }); 
+  dispatch({ type: USER_UPDATE_RESET});
 };

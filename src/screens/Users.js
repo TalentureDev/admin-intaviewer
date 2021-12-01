@@ -11,8 +11,6 @@ const Users = ({ history, match }) => {
   const pageNumber = match.params.pageNumber || 1;
   const dispatch = useDispatch();
 
-
-  
     const pages = 1
     const page =  3
     const userList = useSelector((state) => state.userList);
@@ -25,7 +23,6 @@ const Users = ({ history, match }) => {
       dispatch(getUsers());
      }
   }, [dispatch, history, users]);
-
   
    
 
@@ -46,15 +43,11 @@ const Users = ({ history, match }) => {
           <h1>Users</h1>
         </Col>
         <Col className='text-right'>
-          <Button className='my-3' variant='danger' onClick={createProductHandler}>
+          <Button className='my-3' variant='danger' href="/admin/register" onClick={createProductHandler}>
             Register User
           </Button>
         </Col>
       </Row>
-      {/* {loadingDelete && <Loader />}
-      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
-      {loadingCreate && <Loader />} */}
-      {/* {errorCreate && <Message variant='danger'>{errorCreate}</Message>} */}
       {loading ? (
         <Loader />
       ) : error ? (
@@ -64,9 +57,9 @@ const Users = ({ history, match }) => {
           <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
-                <th> ID </th>
-                <th> FIRST NAME </th>
-                <th> LAST NAME </th>
+                <th>ID </th>
+                <th>FIRST NAME </th>
+                <th>LAST NAME </th>
                 <th>ROLE</th>
                 <th>BRAND </th>
 
@@ -74,7 +67,7 @@ const Users = ({ history, match }) => {
               </tr>
             </thead>
             <tbody>
-              {users.data.map((user) => (
+              {users?.data?.map((user) => (
                 <tr key={user._id}>
                   <td>{user._id}</td>
                   <td>{user.first_name}</td>
