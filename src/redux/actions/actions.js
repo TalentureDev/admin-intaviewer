@@ -37,7 +37,7 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post('${process.env.REACT_APP_BASE_URL}/auth/login/admin', { email, password }, config);
+    const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/login/admin`, { email, password }, config);
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
@@ -74,7 +74,7 @@ export const getUsers = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get('${process.env.REACT_APP_BASE_URL}/user/accounts', config);
+    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/accounts`, config);
 
 
     dispatch({
@@ -177,7 +177,7 @@ export const register = (first_name, last_name, brand_name, email, password, con
     };
 
     const { data } = await axios.post(
-      '${process.env.REACT_APP_BASE_URL}/user/create_account',
+      `${process.env.REACT_APP_BASE_URL}/user/create_account`,
       { first_name, last_name, brand_name, email, password, confirm_password },
       config
     );
