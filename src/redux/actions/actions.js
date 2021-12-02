@@ -37,6 +37,8 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
+    console.log(process.env.REACT_APP_BASE_URL, "${process.env.REACT_APP_BASE_URL")
+
     const { data } = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/login/admin`, { email, password }, config);
 
     dispatch({
