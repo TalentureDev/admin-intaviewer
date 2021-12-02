@@ -13,10 +13,13 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAIL,
+  USER_PROFILE_REQUEST,
+  USER_PROFILE_SUCCESS,
+  USER_PROFILE_FAIL,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAIL,
-  USER_UPDATE_RESET,
+  UPDATE_USER_RESET,
   GET_USER_RESET,
   USER_LIST_RESET,
   USER_LOGOUT,
@@ -58,14 +61,16 @@ export const getUsers = () => async (dispatch, getState) => {
       type: USER_LIST_REQUEST,
     });
 
-    console.log("jjvbdhmvhdbbvdvd")
+     const {
+       userLogin: { userInfo },
+     } = getState();
 
     // const {
     //   userLogin: { userInfo },
     // } = getState();
     const config = {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMWU4NmNmODc0ODJlMDAxN2QyZTY2NSIsImlhdCI6MTYzNjYzMjM2NCwiZXhwIjoxNjM5MjI0MzY0fQ.RFDOaR0Fd24UyTeMctlAG4FG8XoP91AxHVcOEOdOfo0`,
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
@@ -90,15 +95,17 @@ export const getUser = (id) => async (dispatch, getState) => {
       type: GET_USER_REQUEST,
     });
 
-    let id = '5f1e86cf87482e0017d2e665';
+     const {
+       userLogin: { userInfo },
+     } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMWU4NmNmODc0ODJlMDAxN2QyZTY2NSIsImlhdCI6MTYzNjYzMjM2NCwiZXhwIjoxNjM5MjI0MzY0fQ.RFDOaR0Fd24UyTeMctlAG4FG8XoP91AxHVcOEOdOfo0`,
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    console.log(id, "jvdhdvdbcd")
+    console.log(id, "jvdhdvdbcddjbjcbdjbcjdcbdjbcdc")
 
     const { data } = await axios.get(`http://localhost:4000/api/user/profile/${id}`, config);
 
@@ -116,18 +123,56 @@ export const getUser = (id) => async (dispatch, getState) => {
   }
 };
 
-export const register = (first_name, last_name, brand_name, email, password, confirm_password) => async (dispatch) => {
+export const getUserProfile = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_USER_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    console.log(id, 'jvdhdvdbcddjbjcbdjbcjdcbdjbcdc');
+
+    const { data } = await axios.get(`http://localhost:4000/api/user/profile/${id}`, config);
+
+    console.log(data, 'data');
+
+    dispatch({
+      type: GET_USER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_FAIL,
+      payload: error.response && error.response.data.error ? error.response.data.error : error.error,
+    });
+  }
+};
+
+export const register = (first_name, last_name, brand_name, email, password, confirm_password) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_REGISTER_REQUEST,
     });
+
+     const {
+       userLogin: { userInfo },
+     } = getState();
 
     console.log(first_name, last_name, brand_name);
 
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMWU4NmNmODc0ODJlMDAxN2QyZTY2NSIsImlhdCI6MTYzNjYzMjM2NCwiZXhwIjoxNjM5MjI0MzY0fQ.RFDOaR0Fd24UyTeMctlAG4FG8XoP91AxHVcOEOdOfo0`,
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
@@ -152,24 +197,26 @@ export const register = (first_name, last_name, brand_name, email, password, con
   }
 };
 
-export const updateUserProfile = (first_name, last_name, email, password, confirm_password) => async (dispatch) => {
+export const updateUserProfile = ({first_name, last_name, email, id}) => async (dispatch, getState) => {
   try {
     dispatch({
       type: UPDATE_USER_REQUEST,
     });
 
-    console.log(first_name, last_name,);
+     const {
+       userLogin: { userInfo },
+     } = getState();
 
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMWU4NmNmODc0ODJlMDAxN2QyZTY2NSIsImlhdCI6MTYzNjYzMjM2NCwiZXhwIjoxNjM5MjI0MzY0fQ.RFDOaR0Fd24UyTeMctlAG4FG8XoP91AxHVcOEOdOfo0`,
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.post(
-      'http://localhost:4000/api/user/create_account',
-      { first_name, last_name,  email, password, confirm_password },
+    const { data } = await axios.put(
+      `http://localhost:4000/api/user/${id}/edit`,
+      { first_name, last_name,  email },
       config
     );
 
@@ -193,5 +240,39 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: GET_USER_RESET });
   dispatch({ type: USER_LIST_RESET }); 
-  dispatch({ type: USER_UPDATE_RESET});
+  dispatch({ type: UPDATE_USER_RESET });
+};
+
+export const deleteUser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_USER_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    console.log(id, 'jvdhdvdbcddjbjcbdjbcjdcbdjbcdc');
+
+    const { data } = await axios.get(`http://localhost:4000/api/user/profile/${id}`, config);
+
+    console.log(data, 'data');
+
+    dispatch({
+      type: GET_USER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_USER_FAIL,
+      payload: error.response && error.response.data.error ? error.response.data.error : error.error,
+    });
+  }
 };

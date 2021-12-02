@@ -15,26 +15,28 @@ const Users = ({ history, match }) => {
     const page =  3
     const userList = useSelector((state) => state.userList);
     const { users, loading, error } = userList;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
     
 
    useEffect(() => {
 
-     if (!users) {
-      dispatch(getUsers());
+     if (userInfo && userInfo?.user?.isAdmin) {
+       dispatch(getUsers());
+     } else {
+        
+			history.push('/login');
      }
-  }, [dispatch, history, users]);
+  }, [dispatch, history, userInfo]);
   
    
-
-  const deleteProductHandler = (id) => {
+  const deleteUserHandler = (id) => {
     // if (window.confirm('Are you sure')) {
-    //   dispatch(deleteProduct(id));
+    //   dispatch(deleteUser(id));
     // }
   };
 
-  const createProductHandler = () => {
-  //  dispatch(createProduct());
-  };
 
   return (
     <>
@@ -43,7 +45,7 @@ const Users = ({ history, match }) => {
           <h1>Users</h1>
         </Col>
         <Col className='text-right'>
-          <Button className='my-3' variant='danger' href="/admin/register" onClick={createProductHandler}>
+          <Button className='my-3' variant='danger' href="/admin/register">
             Register User
           </Button>
         </Col>
@@ -75,12 +77,12 @@ const Users = ({ history, match }) => {
                   <td>{user.role} </td>
                   <td>{user.brand_name}</td>
                   <td>
-                    <LinkContainer to={`/admin/profile/${user._id}/edit`}>
+                    <LinkContainer to={`/admin/user/${user._id}/edit`}>
                       <Button variant='light' className='btn-sm'>
                         <i className='fas fa-edit'></i>
                       </Button>
                     </LinkContainer>
-                    <Button variant='danger' className='btn-sm' onClick={() => deleteProductHandler(user._id)}>
+                    <Button variant='danger' className='btn-sm' onClick={() => deleteUserHandler(user._id)}>
                       <i className='fas fa-trash'></i>
                     </Button>
                   </td>

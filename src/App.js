@@ -10,29 +10,29 @@ import  Home  from './screens/Home';
 import  Register  from './screens/Register';
 import  Users  from './screens/Users';
 import  Brands  from './screens/Brands';
-import  Login  from './screens/Login';
+import Login from './screens/Login';
+import UserProfile from './screens/UserProfile';
 
 
 
 const App = () => {
 
   return (
-      <Router>
-        <Header />
+    <Router>
+      <Header />
       <main className='py-3'>
-        
-            <Container>
-              <Route path='/login' component={Login} />
-              <Route path='/admin/profile/:id' component={Profile} />
-              <Route path='/admin/register' component={Register} />
-              <Route path='/admin/users' component={Users} />
-              <Route path='/admin/brands' component={Brands} />
-              <Route exact path='/' component={Home} />
-            </Container>
-           
-          </main>
-        <Footer />
-      </Router>
+        <Container>
+          <Route path='/login' component={Login} />
+          <Route path='/admin/profile/:id/edit' component={Profile} />
+          <Route path='/admin/user/:id/edit' component={UserProfile} />
+          <Route path='/admin/register' component={Register} />
+          <Route path='/admin/users' component={Users} />
+          <Route path='/admin/brands' component={Brands} />
+          <Route exact path='/' component={Home} />
+        </Container>
+      </main>
+      <Footer />
+    </Router>
   );
 }
 

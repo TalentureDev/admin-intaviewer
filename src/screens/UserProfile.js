@@ -9,11 +9,13 @@ import { getUser, updateUserProfile } from '../redux/actions/actions.js';
 import FormContainer from './../components/FormContainer';
 import { Link } from 'react-router-dom';
 
-const Profile = ({ location, history, match }) => {
+const UserProfile = ({ location, history, match }) => {
 
-  const userId = match.params.id;
-    const [first_name, setfirst_name] = useState('');
-    const [last_name, setlast_name] = useState('');
+    const userId = match.params.id;
+
+    
+  const [first_name, setfirst_name] = useState('');
+  const [last_name, setlast_name] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState(null);
 
@@ -25,40 +27,40 @@ const Profile = ({ location, history, match }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  console.log(userId, 'userId');
+  console.log(match.params.id, 'match.params.id');
 
-  useEffect(() => {
-    if (!userInfo) {
-      history.push('/login');
-    } else {
-      console.log(userInfo, 'djbjdbjbdcjd');
-      console.log(user, 'djbjdbcd');
-      if (!user?.user?.first_name || userId !== user.user._id) {
-        dispatch(getUser(userId));
-      } else {
-        setfirst_name(user.user.first_name);
-        setlast_name(user.user.last_name);
-        setEmail(user.user.email);
-      }
-    }
-  }, [userId, userInfo, dispatch, history, user]);
+ useEffect(() => {
+   if (!userInfo) {
+     history.push('/login');
+   } else {
+     console.log(userInfo, 'djbjdbjbdcjd');
+     console.log(user, 'djbjdbcd');
+     if (!user?.user?.first_name || userId !== user.user._id) {
+       dispatch(getUser(userId));
+     } else {
+       setfirst_name(user.user.first_name);
+       setlast_name(user.user.last_name);
+       setEmail(user.user.email);
+     }
+   }
+ }, [userId, userInfo, dispatch, history, user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     // if () {
     //   setMessage('password do not match');
     // } else {
-     dispatch(updateUserProfile({ id: user.user._id, first_name, last_name, email }));
+    dispatch(updateUserProfile({ id: user.user._id, first_name, last_name, email }));
     // }
   };
 
   return (
-    <>
+   <>
       <Link to='/admin/users' className='btn btn-light my-3'>
         Go Back
       </Link>
       <FormContainer>
-        <h2>Admin Profile</h2>
+        <h2>User Profile</h2>
         {/* {success && <Message variant='success'>Profile Updated</Message>} */}
         {message && <Message variant='danger'>{message}</Message>}
         {error && <Message variant='danger'>{error}</Message>}
@@ -90,4 +92,4 @@ const Profile = ({ location, history, match }) => {
   );
 };
 
-export default Profile;
+export default UserProfile;

@@ -12,9 +12,12 @@ import {
   GET_USER_SUCCESS,
   GET_USER_FAIL,
   USER_LIST_RESET,
-  USER_UPDATE_RESET,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
+  UPDATE_USER_RESET,
   USER_LOGOUT,
-  GET_USER_RESET
+  GET_USER_RESET,
 } from '../constants/constants';
 
 
@@ -38,11 +41,11 @@ export const getUserReducer = (state = { user : {}}, action) => {
     case GET_USER_REQUEST:
       return { ...state, loading: true };
     case GET_USER_SUCCESS:
-      return { loading: false, userInfo: action.payload };
+      return { loading: false, user: action.payload };
     case GET_USER_FAIL:
       return { loading: false, error: action.payload };
     case GET_USER_RESET:
-      return {userInfo : {}}
+      return {user : {}}
     default:
       return state;
   }
@@ -63,13 +66,13 @@ export const userRegisterReducer = (state = { userRegister: {} }, action) => {
 
 export const updateUserReducer = (state = { }, action) => {
   switch (action.type) {
-    case GET_USER_REQUEST:
+    case UPDATE_USER_REQUEST:
       return { loading: true };
-    case GET_USER_SUCCESS:
-      return { loading: false, userInfo: action.payload };
-    case GET_USER_FAIL:
+    case UPDATE_USER_SUCCESS:
+      return { loading: false, userInfo: action.payload,  success : true };
+    case UPDATE_USER_FAIL:
       return { loading: false, error: action.payload };
-    case USER_UPDATE_RESET:
+    case UPDATE_USER_RESET:
       return {};
     default:
       return state;
