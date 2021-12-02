@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from './../components/Message';
 import Loader from './../components/Loader';
 import { register } from '../redux/actions/actions.js';
 import FormContainer from './../components/FormContainer';
+import DropdownMenu from '@restart/ui/esm/DropdownMenu';
 
 const Register = ({ location, history }) => {
     const [first_name, setFirst_name] = useState('');
@@ -23,6 +24,12 @@ const Register = ({ location, history }) => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const handleSelect = (e) => {
+    setBrand_name(e);
+
+    console.log(brand_name, "brancName")
+  }
 
 
 	useEffect(() => {
@@ -59,7 +66,7 @@ const Register = ({ location, history }) => {
     <FormContainer>
       <h1> REGISTER USER</h1>
       {success && <Message variant='success'>User Created Successfully</Message>}
-      { success && <Message variant='success'>{ userRegister.message }</Message>}
+      {success && <Message variant='success'>{userRegister.message}</Message>}
       {message && <Message variant='danger'>{message}</Message>}
       {error && <Message variant='danger'>{error}</Message>}
       {loading && <Loader />}
@@ -74,17 +81,30 @@ const Register = ({ location, history }) => {
         </Form.Group>
         <Form.Group controlId='brand name' className='mt-4'>
           <Form.Label>Brand Name</Form.Label>
-          <Form.Control
+          <DropdownButton
+            size='sm'
+            varriannt='Secondary'
+            title={brand_name ? brand_name : 'Brand Name'}
+            onSelect={handleSelect}
+          >
+            <Dropdown.Item eventKey='FMCG       '>FMCG</Dropdown.Item>
+            <Dropdown.Item eventKey='ETR         '>ETR</Dropdown.Item>
+            <Dropdown.Item eventKey='Specialist Medics'>Specialist Medics</Dropdown.Item>
+            <Dropdown.Item eventKey='Talenture'>Talenture</Dropdown.Item>
+            <Dropdown.Item eventKey='Digital Center'>Digital Center</Dropdown.Item>
+          </DropdownButton>
+          {/* <Form.Control
             type='brand name'
             placeholder='Enter Brand Name'
             value={brand_name}
             onChange={(e) => setBrand_name(e.target.value)}
-          ></Form.Control>
+          ></Form.Control> */}
         </Form.Group>
         <Form.Group controlId='email' className='mt-4'>
           <Form.Label>Email</Form.Label>
           <Form.Control type='email' placeholder='Enter email' value={email} onChange={(e) => setEmail(e.target.value)}></Form.Control>
         </Form.Group>
+
         <Form.Group controlId='password' className='mt-4'>
           <Form.Label>Password</Form.Label>
           <Form.Control type='password' placeholder='Enter password' value={password} onChange={(e) => setPassword(e.target.value)}></Form.Control>
