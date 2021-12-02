@@ -37,7 +37,7 @@ export const login = (email, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post('http://localhost:4000/api/auth/login/admin', { email, password }, config);
+    const { data } = await axios.post('${process.env.REACT_APP_BASE_URL}/auth/login/admin', { email, password }, config);
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
@@ -74,7 +74,7 @@ export const getUsers = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get('http://localhost:4000/api/user/accounts', config);
+    const { data } = await axios.get('${process.env.REACT_APP_BASE_URL}/user/accounts', config);
 
 
     dispatch({
@@ -107,7 +107,7 @@ export const getUser = (id) => async (dispatch, getState) => {
 
     console.log(id, "jvdhdvdbcddjbjcbdjbcjdcbdjbcdc")
 
-    const { data } = await axios.get(`http://localhost:4000/api/user/profile/${id}`, config);
+    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/profile/${id}`, config);
 
     console.log(data, 'data');
 
@@ -141,7 +141,7 @@ export const getUserProfile = (id) => async (dispatch, getState) => {
 
     console.log(id, 'jvdhdvdbcddjbjcbdjbcjdcbdjbcdc');
 
-    const { data } = await axios.get(`http://localhost:4000/api/user/profile/${id}`, config);
+    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/profile/${id}`, config);
 
     console.log(data, 'data');
 
@@ -177,7 +177,7 @@ export const register = (first_name, last_name, brand_name, email, password, con
     };
 
     const { data } = await axios.post(
-      'http://localhost:4000/api/user/create_account',
+      '${process.env.REACT_APP_BASE_URL}/user/create_account',
       { first_name, last_name, brand_name, email, password, confirm_password },
       config
     );
@@ -215,7 +215,7 @@ export const updateUserProfile = ({first_name, last_name, email, id}) => async (
     };
 
     const { data } = await axios.put(
-      `http://localhost:4000/api/user/${id}/edit`,
+      `${process.env.REACT_APP_BASE_URL}/user/${id}/edit`,
       { first_name, last_name,  email },
       config
     );
@@ -261,7 +261,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 
     console.log(id, 'jvdhdvdbcddjbjcbdjbcjdcbdjbcdc');
 
-    const { data } = await axios.get(`http://localhost:4000/api/user/profile/${id}`, config);
+    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/profile/${id}`, config);
 
     console.log(data, 'data');
 
