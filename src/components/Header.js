@@ -44,7 +44,7 @@ const Header = ({props}) => {
   const logoutHandler = (e) => {
     e.preventDefault()
     dispatch(logout());
-    
+
   };
 
   return (
@@ -75,9 +75,9 @@ const Header = ({props}) => {
                   <LinkContainer to='/admin/users'>
                     <NavDropdown.Item>Users</NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to='/admin/brands'>
+                  {/* <LinkContainer to='/admin/brands'>
                     <NavDropdown.Item>Brands</NavDropdown.Item>
-                  </LinkContainer>
+                  </LinkContainer> */}
                   <LinkContainer to='/admin/register'>
                     <NavDropdown.Item>Register User</NavDropdown.Item>
                   </LinkContainer>

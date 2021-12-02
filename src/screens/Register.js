@@ -19,15 +19,28 @@ const Register = ({ location, history }) => {
 	const dispatch = useDispatch();
 
 	const user = useSelector((state) => state.user);
-	const { userRegister, loading, error } = user;
+	const { userRegister, loading, error, success } = user;
 
-	// const redirect = location.search ? location.search.split('=')[1] : '/';
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
-	// useEffect(() => {
-	// 	if (userInfo) {
-	// 		history.push(redirect);
-	// 	}
-	// }, [history, userInfo, redirect]);
+
+	useEffect(() => {
+    if (success) {
+      setFirst_name('');
+      setLast_name('');
+      setEmail('');
+      setPassword('');
+      setBrand_name('');
+      setConfirm_password('');
+    }
+       
+		if (!userInfo) {
+			history.push('/login');
+		}
+	}, [history, userInfo, success]);
+
+ 
 
 	const submitHandler = (e) => {
         e.preventDefault();
@@ -38,15 +51,18 @@ const Register = ({ location, history }) => {
       setMessage('Please fill all fields ');
     } else {
       dispatch(register(first_name, last_name, brand_name, email, password, confirm_password));
+       
     }
 	};
 
 	return (
     <FormContainer>
       <h1> REGISTER USER</h1>
+      {success && <Message variant='success'>User Created Successfully</Message>}
+      { success && <Message variant='success'>{ userRegister.message }</Message>}
       {message && <Message variant='danger'>{message}</Message>}
       {error && <Message variant='danger'>{error}</Message>}
-			{loading && <Loader />}
+      {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='firstname'>
           <Form.Label>First Name</Form.Label>

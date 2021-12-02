@@ -8,7 +8,7 @@ const reducer = combineReducers({
   userList: userListReducer,
   user: userRegisterReducer,
   userDetails: getUserReducer,
-  userInfo: updateUserReducer,
+  userUpdate: updateUserReducer,
   userLogin: userLoginReducer,
 });
 
