@@ -87,8 +87,9 @@ const Register = ({ location, history }) => {
             title={brand_name ? brand_name : 'Brand Name'}
             onSelect={handleSelect}
           >
-            <Dropdown.Item eventKey='FMCG       '>FMCG</Dropdown.Item>
-            <Dropdown.Item eventKey='ETR         '>ETR</Dropdown.Item>
+            <Dropdown.Item eventKey='FMCG'>FMCG</Dropdown.Item>
+            <Dropdown.Item eventKey='ETR'>ETR</Dropdown.Item>
+            <Dropdown.Item eventKey='ETR'>Oscar Temple</Dropdown.Item>
             <Dropdown.Item eventKey='Specialist Medics'>Specialist Medics</Dropdown.Item>
             <Dropdown.Item eventKey='Talenture'>Talenture</Dropdown.Item>
             <Dropdown.Item eventKey='Digital Center'>Digital Center</Dropdown.Item>
