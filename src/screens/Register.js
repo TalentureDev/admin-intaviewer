@@ -34,12 +34,7 @@ const Register = ({ location, history }) => {
 
 	useEffect(() => {
     if (success) {
-      setFirst_name('');
-      setLast_name('');
-      setEmail('');
-      setPassword('');
-      setBrand_name('');
-      setConfirm_password('');
+      history.push('/admin/users');
     }
        
 		if (!userInfo) {
